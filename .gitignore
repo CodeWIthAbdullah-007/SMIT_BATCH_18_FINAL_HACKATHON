@@ -1,2 +1,10 @@
-.env
+# FOLDERS:
 node_modules
+dist
+build
+.vscode
+.next
+
+# FILES:
+.env
+Remaining.md

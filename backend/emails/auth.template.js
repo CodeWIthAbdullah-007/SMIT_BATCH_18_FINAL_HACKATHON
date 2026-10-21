@@ -1,0 +1,27 @@
+const OnBoard = {
+    subject: "Welcome Onboard! 🚀",
+    text: "Your account has been registered succesfully in our application. Thanks for choosing us!"
+};
+
+const SignIn = {
+    subject: "Welcome Back! 🚀",
+    text: "Your account has been logged in succesfully in our application."
+};
+
+const ForgotPwd = {
+    subject: "Password Reset Request - Your OTP Code 🔒",
+    text: (otp) => {
+        return `You requested a password reset. Your 6-digit OTP code is: ${otp}. This code is valid for 5 minutes. If you did not request this, please ignore this email or secure your account.`;
+    }
+};
+
+const ResetPwd = {
+    subject: "Your Password Updated successfully",
+    text: "You requested a password reset. After complete authorization now your password has been updated successfully next time don't forgot your password."
+};
+
+
+
+const authEmailConstants = { OnBoard, SignIn, ForgotPwd, ResetPwd };
+
+module.exports = authEmailConstants;
