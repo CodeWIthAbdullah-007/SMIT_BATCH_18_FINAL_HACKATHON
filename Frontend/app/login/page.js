@@ -96,7 +96,7 @@ export default function LoginPage() {
       });
 
       setTimeout(() => {
-        router.push("/");
+        router.push("/dashboard");
       }, 800);
     } catch (error) {
       setMessage({
