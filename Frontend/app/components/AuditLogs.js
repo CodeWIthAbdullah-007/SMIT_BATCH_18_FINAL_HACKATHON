@@ -64,7 +64,7 @@ export default function AuditLogs() {
 
                 <div className="flex w-fit items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 shadow-sm">
                     <span className="h-2 w-2 rounded-full bg-amber-400" />
-                    Awaiting backend data
+                    {loading ? "Loading audit logs" : loadError ? "Unable to load data" : "Connected to backend"}
                 </div>
             </div>
 
@@ -102,7 +102,7 @@ export default function AuditLogs() {
                                 Activity history
                             </h2>
                             <p className="mt-1 text-sm text-slate-500">
-                                Review recorded actions, users and timestamps.
+                                {loadError || (loading ? "Loading recorded actions..." : "Review recorded actions, users and timestamps.")}
                             </p>
                         </div>
 
