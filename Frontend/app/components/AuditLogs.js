@@ -1,12 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AuditLogs() {
     const [search, setSearch] = useState("");
     const [actionFilter, setActionFilter] = useState("All");
+    const [logs, setLogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState("");
 
-    const logs = [];
+    useEffect(() => {
+        async function loadLogs() {
+            const token = localStorage.getItem("hcm_token");
+
+            if (!token) {
+                setLoadError("Please sign in to view audit logs.");
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/audit/logs`,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || data.message || "Unable to load audit logs.");
+                }
+
+                setLogs(data.map((item) => ({
+                    id: item._id,
+                    user: item.actor || "Unknown",
+                    action: item.action || "Unknown action",
+                    details: `${item.entity || "Record"} ${item.entityId || ""}`.trim(),
+                    createdAt: item.createdAt,
+                })));
+            } catch (error) {
+                setLoadError(error.message || "Unable to load audit logs.");
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadLogs();
+    }, []);
 
     const filteredLogs = logs.filter((log) => {
         const matchesSearch = `${log.user} ${log.action} ${log.details}`
@@ -102,7 +141,7 @@ export default function AuditLogs() {
                                 Activity history
                             </h2>
                             <p className="mt-1 text-sm text-slate-500">
-                                {loadError || (loading ? "Loading recorded actions..." : "Review recorded actions, users and timestamps.")}
+                                {loadError || (loading ? "Loading recorded actions..." : "{loadError || (loading ? "Loading recorded actions..." : "Review recorded actions, users and timestamps.")}")}
                             </p>
                         </div>
 
