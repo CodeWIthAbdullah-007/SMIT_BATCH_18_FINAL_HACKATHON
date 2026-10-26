@@ -9,12 +9,19 @@ export default function AIAssistant() {
   const [notice, setNotice] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
 
     const text = question.trim();
 
     if (!text || loading) return;
+
+    const token = localStorage.getItem("hcm_token");
+
+    if (!token) {
+      setNotice("Your session has expired. Please sign in again.");
+      return;
+    }
 
     setMessages((previous) => [
       ...previous,
@@ -24,11 +31,42 @@ export default function AIAssistant() {
         sender: "user",
       },
     ]);
-
     setQuestion("");
-    setNotice(
-      "Your message is saved in this chat, but the AI service is not connected yet. Connect the backend to receive AI-generated answers."
-    );
+    setNotice("");
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/ai/chat`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ message: text }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || data.message || "The AI request failed.");
+      }
+
+      setMessages((previous) => [
+        ...previous,
+        {
+          id: Date.now() + 1,
+          text: data.reply || "The assistant returned an empty response.",
+          sender: "assistant",
+        },
+      ]);
+    } catch (error) {
+      setNotice(error.message || "Unable to connect to the AI service.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const clearChat = () => {
