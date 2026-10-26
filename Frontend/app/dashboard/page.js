@@ -1,19 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import OrganizationSetup from "./components/OrganizationSetup";
-import Employees from "./components/Employees";
-import Attendance from "./components/Attendance";
-import LeaveManagement from "./components/LeaveManagement";
-import Payroll from "./components/Payroll";
-import Departments from "./components/Departments";
-import Announcements from "./components/Announcements";
-import AIAssistant from "./components/AIAssistant";
-import AuditLogs from "./components/AuditLogs";
-import Notifications from "./components/Notifications";
-import EmployeeProfile from "./components/EmployeeProfile";
-import DashboardAnalytics from "./components/DashboardAnalytics";
-import Reports from "./components/Reports";
+import OrganizationSetup from "../components/OrganizationSetup";
+import Employees from "../components/Employees";
+import Attendance from "../components/Attendance";
+import LeaveManagement from "../components/LeaveManagement";
+import Payroll from "../components/Payroll";
+import Departments from "../components/Departments";
+import Announcements from "../components/Announcements";
+import AIAssistant from "../components/AIAssistant";
+import AuditLogs from "../components/AuditLogs";
+import Notifications from "../components/Notifications";
+import EmployeeProfile from "../components/EmployeeProfile";
+import DashboardAnalytics from "../components/DashboardAnalytics";
+import Reports from "../components/Reports";
 
 const navigation = [
   { label: "Overview", icon: "⌂", group: "WORKSPACE" },
