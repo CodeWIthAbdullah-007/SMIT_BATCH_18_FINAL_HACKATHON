@@ -16,54 +16,10 @@ export default function ForgotPasswordPage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    if (!email.trim()) {
-      setMessage({
-        type: "error",
-        text: "Please enter your email address.",
-      });
-      return;
-    }
-
-    setLoading(true);
-    setMessage({ type: "", text: "" });
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/auth/forgot-password`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email.trim(),
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || data.error || "Unable to process your request."
-        );
-      }
-
-      setMessage({
-        type: "success",
-        text:
-          data.message ||
-          "If an account exists for this email, recovery instructions will be sent.",
-      });
-    } catch (error) {
-      setMessage({
-        type: "error",
-        text: error.message || "Unable to connect to the server.",
-      });
-    } finally {
-      setLoading(false);
-    }
+    setMessage({
+      type: "error",
+      text: "Password recovery is not implemented in the current backend. Please contact your system administrator.",
+    });
   }
 
   const inputClasses =
@@ -98,7 +54,7 @@ export default function ForgotPasswordPage() {
       <AuthHeader
         label="ACCOUNT RECOVERY"
         title="Forgot your password?"
-        description="It happens! Enter the email address associated with your account to request recovery instructions."
+        description="Password recovery is not currently available. Contact your system administrator for assistance."
       />
 
       <AuthMessage message={message} />
@@ -128,7 +84,7 @@ export default function ForgotPasswordPage() {
           />
         </div>
 
-        <AuthButton loading={loading}>Send recovery request</AuthButton>
+        <AuthButton loading={loading}>Contact administrator</AuthButton>
       </form>
 
       <div className="mt-7 rounded-xl border border-slate-200 bg-white p-4">
