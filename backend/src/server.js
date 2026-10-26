@@ -3,14 +3,10 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const helmet = require("helmet");
-const morgan = require("morgan");
 const connectDB = require("./config/db");
-const apiRouter = require("./router/index.router");
+const apiRouter = require("./routes/api");
 
 const app = express();
-
-app.use(helmet());
 
 app.use(
   cors({
@@ -19,7 +15,6 @@ app.use(
 );
 
 app.use(express.json());
-app.use(morgan("dev"));
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({
