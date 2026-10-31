@@ -16,7 +16,7 @@ API.interceptors.request.use((config) => {
 API.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (typeof window !== 'undefined' && error.response?.status === 401) {
+    if (typeof window !== 'undefined' && error.response?.status === 401 && localStorage.getItem('token')) {
       window.dispatchEvent(new Event('hcm:unauthorized'));
     }
     return Promise.reject(error);
