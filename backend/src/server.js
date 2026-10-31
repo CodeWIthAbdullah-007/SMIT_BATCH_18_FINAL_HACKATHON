@@ -20,46 +20,13 @@ app.disable('x-powered-by');
    CORS CONFIGURATION
 ========================================= */
 
-const allowedOrigins = (
-  process.env.FRONTEND_URLS ||
-  process.env.FRONTEND_URL ||
-  ''
-)
-  .split(',')
-  .map((origin) => origin.trim().replace(/\/+$/, ''))
-  .filter(Boolean);
+const corsOptions = {
+    origin: process.env.FRONTEND_URL,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
 
-app.use(
-  cors({
-    origin(origin, callback) {
-      const normalizedOrigin = origin
-        ? origin.replace(/\/+$/, '')
-        : '';
-
-      const isLocalDevelopmentOrigin =
-        process.env.NODE_ENV !== 'production' &&
-        /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/.test(
-          normalizedOrigin
-        );
-
-      if (
-        !origin ||
-        allowedOrigins.includes(normalizedOrigin) ||
-        isLocalDevelopmentOrigin
-      ) {
-        return callback(null, true);
-      }
-
-      const error = new Error(
-        'This frontend origin is not allowed by the server CORS policy.'
-      );
-
-      error.status = 403;
-
-      return callback(error);
-    },
-  })
-);
+app.use(cors(corsOptions));
 
 app.use(express.json({ limit: '1mb' }));
 
