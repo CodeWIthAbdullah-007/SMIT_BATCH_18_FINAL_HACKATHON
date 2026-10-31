@@ -2,16 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base background styling */
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #f8fafc;
+:root {
+  color-scheme: dark;
+  --hcm-bg: #050b0d;
+  --hcm-panel: #0b1719;
+  --hcm-panel-soft: #102124;
+  --hcm-border: rgba(148, 163, 184, 0.14);
+  --hcm-teal: #5eead4;
 }
 
-* {
-  box-sizing: border-box;
+* { box-sizing: border-box; }
+
+html, body {
+  padding: 0;
+  margin: 0;
+  min-height: 100%;
+  background: var(--hcm-bg);
+  color: #e2e8f0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
+
+body { background-color: var(--hcm-bg) !important; }
+::selection { background: rgba(45, 212, 191, .28); color: #f0fdfa; }
+* { scrollbar-width: thin; scrollbar-color: #285653 #081214; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-track { background: #081214; }
+*::-webkit-scrollbar-thumb { border-radius: 99px; background: #285653; }
+
+/* Shared Tailwind utility theme: keeps every existing screen and interaction intact. */
+[class*="bg-white"], [class*="bg-slate-50"], [class*="bg-slate-100"] {
+  background-color: #0b1719 !important;
+}
+[class*="bg-indigo-50"], [class*="bg-indigo-100"], [class*="bg-violet-50"], [class*="bg-sky-50"] {
+  background-color: rgba(45, 212, 191, .09) !important;
+}
+[class*="bg-indigo-600"], [class*="bg-indigo-700"], [class*="bg-violet-600"] {
+  background-color: #0f766e !important;
+  color: #f0fdfa !important;
+}
+[class*="bg-emerald-50"] { background-color: rgba(16, 185, 129, .10) !important; }
+[class*="bg-emerald-600"] { background-color: #0f766e !important; }
+[class*="bg-rose-50"] { background-color: rgba(244, 63, 94, .10) !important; }
+[class*="bg-amber-50"] { background-color: rgba(245, 158, 11, .10) !important; }
+
+[class*="text-slate-950"], [class*="text-slate-900"], [class*="text-slate-800"] { color: #f1f5f9 !important; }
+[class*="text-slate-700"], [class*="text-slate-600"] { color: #cbd5e1 !important; }
+[class*="text-slate-500"], [class*="text-slate-400"] { color: #94a3b8 !important; }
+[class*="text-indigo-"], [class*="text-violet-"] { color: #5eead4 !important; }
+[class*="text-emerald-700"], [class*="text-emerald-800"] { color: #6ee7b7 !important; }
+
+[class*="border-slate-"], [class*="border-indigo-"], [class*="border-white"] {
+  border-color: rgba(148, 163, 184, .14) !important;
+}
+[class*="ring-slate-"], [class*="ring-indigo-"] { --tw-ring-color: rgba(45, 212, 191, .18) !important; }
+[class*="hover:bg-slate-"]:hover, [class*="hover:bg-white"]:hover { background-color: rgba(45, 212, 191, .08) !important; }
+[class*="hover:bg-indigo-"]:hover { background-color: #115e59 !important; }
+input, select, textarea {
+  color: #e2e8f0;
+  background-color: #071113;
+  border-color: rgba(148, 163, 184, .18);
+}
+input::placeholder, textarea::placeholder { color: #64748b; }
+input:focus, select:focus, textarea:focus {
+  border-color: #5eead4 !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, .10);
+}
+option { background: #0b1719; color: #e2e8f0; }
+table thead { background: #102124 !important; }
+table tbody tr:hover { background: rgba(45, 212, 191, .035); }
+button, a { -webkit-tap-highlight-color: transparent; }
