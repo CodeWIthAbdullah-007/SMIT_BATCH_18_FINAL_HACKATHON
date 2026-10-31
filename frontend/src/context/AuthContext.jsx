@@ -25,6 +25,8 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const handleUnauthorized = () => {
+      // Ignore late 401 responses after the user has already logged out.
+      if (!localStorage.getItem('token')) return;
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       setUser(null);
