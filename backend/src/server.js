@@ -20,10 +20,21 @@ app.disable('x-powered-by');
    CORS CONFIGURATION
 ========================================= */
 
+const frontendUrl = (process.env.FRONTEND_URL || '')
+  .trim()
+  .replace(/\/+$/, '');
+
 const corsOptions = {
-    origin: process.env.FRONTEND_URL,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+  origin: (origin, callback) => {
+    if (!origin || origin === frontendUrl) {
+      return callback(null, true);
+    }
+
+    console.error('Blocked CORS origin:', origin);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
