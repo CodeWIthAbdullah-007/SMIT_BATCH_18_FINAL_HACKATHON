@@ -143,7 +143,7 @@ exports.chat = async (req, res) => {
     ];
     let toolInvoked = [];
     let response = await client.chat.completions.create({
-      model: process.env.AI_MODEL || 'gpt-4o-mini',
+      model: (process.env.AI_MODEL || 'gpt-4o').trim(),
       messages,
       tools,
       tool_choice: 'auto'
@@ -163,7 +163,7 @@ exports.chat = async (req, res) => {
         messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(result) });
       }
       response = await client.chat.completions.create({
-        model: process.env.AI_MODEL || 'gpt-4o-mini',
+        model: (process.env.AI_MODEL || 'gpt-4o').trim(),
         messages,
         tools,
         tool_choice: 'auto'
@@ -209,7 +209,7 @@ exports.dashboardSummary = async (req, res) => {
   };
   try {
     const result = await client.chat.completions.create({
-      model: process.env.AI_MODEL || 'gpt-4o-mini',
+      model: (process.env.AI_MODEL || 'gpt-4o').trim(),
       messages: [
         { role: 'system', content: 'Summarize these real HCM dashboard figures in 3 to 5 concise, useful bullet points. Do not invent numbers, infer unavailable data, or reveal unnecessary personal information.' },
         { role: 'user', content: JSON.stringify(summaryData) }
@@ -234,7 +234,7 @@ exports.smartLeaveExtract = async (req, res) => {
 
   try {
     const completion = await client.chat.completions.create({
-      model: process.env.AI_MODEL || 'gpt-4o-mini',
+      model: (process.env.AI_MODEL || 'gpt-4o').trim(),
       response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: `Extract the employee's leave request as JSON only. Use keys leaveType (annual, sick, casual, unpaid), startDate and endDate (YYYY-MM-DD), and reason. Today is ${new Date().toISOString().slice(0, 10)}. Resolve relative dates from this day. If the type is not explicit, use casual. Never submit or approve the request; the user will review and confirm it.` },
