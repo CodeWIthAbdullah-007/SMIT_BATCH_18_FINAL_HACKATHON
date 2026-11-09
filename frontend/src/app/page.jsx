@@ -57,10 +57,10 @@ export default function HomePage() {
 
         <div className="mx-auto max-w-7xl px-5 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-14 lg:px-10">
           <div className="mb-14 flex flex-wrap items-center justify-start gap-3">
-            <Link href="/login" className="inline-flex items-center gap-2 rounded-xl bg-teal-300 px-5 py-3 text-sm font-extrabold text-[#061012] shadow-lg shadow-teal-950/30 transition hover:-translate-y-0.5 hover:bg-teal-200">
+            <Link href="/access" className="inline-flex items-center gap-2 rounded-xl bg-teal-300 px-5 py-3 text-sm font-extrabold text-[#061012] shadow-lg shadow-teal-950/30 transition hover:-translate-y-0.5 hover:bg-teal-200">
               Login <ArrowUpRight size={16} />
             </Link>
-            <Link href="/setup" className="inline-flex items-center gap-2 rounded-xl border border-teal-200/25 bg-white/[0.04] px-5 py-3 text-sm font-bold text-teal-100 transition hover:border-teal-200/50 hover:bg-teal-300/10">
+            <Link href="/access" className="inline-flex items-center gap-2 rounded-xl border border-teal-200/25 bg-white/[0.04] px-5 py-3 text-sm font-bold text-teal-100 transition hover:border-teal-200/50 hover:bg-teal-300/10">
               Sign Up <ArrowRight size={16} />
             </Link>
           </div>
@@ -79,7 +79,7 @@ export default function HomePage() {
                 HCM Lite brings your company&apos;s people operations into one organized workspace. Manage employees, attendance, leave, payroll and everyday communication without switching between scattered tools.
               </p>
               <div className="mt-9 flex flex-wrap items-center gap-4">
-                <Link href="/login" className="group inline-flex items-center gap-3 rounded-xl bg-teal-300 px-6 py-3.5 text-sm font-extrabold text-[#061012] shadow-xl shadow-teal-950/30 transition hover:-translate-y-0.5 hover:bg-teal-200">
+                <Link href="/access" className="group inline-flex items-center gap-3 rounded-xl bg-teal-300 px-6 py-3.5 text-sm font-extrabold text-[#061012] shadow-xl shadow-teal-950/30 transition hover:-translate-y-0.5 hover:bg-teal-200">
                   Enter your workspace <ArrowRight size={17} className="transition group-hover:translate-x-1" />
                 </Link>
                 <a href="#features" className="inline-flex items-center gap-2 px-2 py-3 text-sm font-semibold text-slate-300 transition hover:text-teal-200">
@@ -199,8 +199,8 @@ export default function HomePage() {
           <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
             <div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[.2em] text-teal-300">Your company workspace starts here</p><h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Make people management feel simpler.</h2><p className="mt-4 text-sm leading-7 text-slate-300">Sign in to continue to your HCM Lite workspace, or set up a company workspace to get started.</p></div>
             <div className="flex shrink-0 flex-wrap gap-3">
-              <Link href="/login" className="inline-flex items-center gap-2 rounded-xl bg-teal-300 px-5 py-3.5 text-sm font-extrabold text-[#061012] transition hover:bg-teal-200">Login <ArrowRight size={16} /></Link>
-              <Link href="/setup" className="inline-flex items-center gap-2 rounded-xl border border-teal-100/25 bg-white/[0.04] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-white/[0.08]">Sign Up <ArrowUpRight size={16} /></Link>
+              <Link href="/access" className="inline-flex items-center gap-2 rounded-xl bg-teal-300 px-5 py-3.5 text-sm font-extrabold text-[#061012] transition hover:bg-teal-200">Login <ArrowRight size={16} /></Link>
+              <Link href="/access" className="inline-flex items-center gap-2 rounded-xl border border-teal-100/25 bg-white/[0.04] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-white/[0.08]">Sign Up <ArrowUpRight size={16} /></Link>
             </div>
           </div>
         </div>
