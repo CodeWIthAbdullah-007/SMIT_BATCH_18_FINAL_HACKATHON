@@ -70,19 +70,19 @@ export default function LoginPage() {
 
         {error && <div role="alert" className="mt-6 rounded-xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-xs leading-5 text-rose-200">{error}</div>}
 
-        <form onSubmit={handleSubmit} className="mt-7 space-y-5">
+        <form onSubmit={handleSubmit} autoComplete="off" className="mt-7 space-y-5">
           <label className="block">
             <span className="mb-2 block text-xs font-semibold text-slate-300">Email address</span>
             <span className="flex items-center gap-3 rounded-xl border border-white/10 bg-[#071113] px-4 transition focus-within:border-teal-300/60">
               <Mail size={16} className="shrink-0 text-teal-300" />
-              <input type="email" autoComplete="username" required placeholder="Enter your email" value={email} onChange={(event) => setEmail(event.target.value)} className="w-full bg-transparent py-3.5 text-sm text-white outline-none placeholder:text-slate-600" />
+              <input type="email" name="hcm-login-email" autoComplete="off" required placeholder="Enter your email" value={email} onChange={(event) => setEmail(event.target.value)} className="w-full bg-transparent py-3.5 text-sm text-white outline-none placeholder:text-slate-600" />
             </span>
           </label>
           <label className="block">
             <span className="mb-2 block text-xs font-semibold text-slate-300">Password</span>
             <span className="flex items-center gap-3 rounded-xl border border-white/10 bg-[#071113] px-4 transition focus-within:border-teal-300/60">
               <LockKeyhole size={16} className="shrink-0 text-teal-300" />
-              <input type="password" autoComplete="current-password" required placeholder="Enter your password" value={password} onChange={(event) => setPassword(event.target.value)} className="w-full bg-transparent py-3.5 text-sm text-white outline-none placeholder:text-slate-600" />
+              <input type="password" name="hcm-login-password" autoComplete="new-password" required placeholder="Enter your password" value={password} onChange={(event) => setPassword(event.target.value)} className="w-full bg-transparent py-3.5 text-sm text-white outline-none placeholder:text-slate-600" />
             </span>
           </label>
           <button type="submit" disabled={loading || !selectedRole} className="w-full rounded-xl bg-teal-300 px-5 py-3.5 text-sm font-extrabold text-[#061012] transition hover:bg-teal-200 disabled:cursor-not-allowed disabled:opacity-50">
