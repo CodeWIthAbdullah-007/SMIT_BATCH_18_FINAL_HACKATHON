@@ -15,7 +15,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [unread, setUnread] = useState(0);
-  const isAuthPage = ['/login', '/setup', '/change-password'].includes(pathname);
+  const isAuthPage = ['/login', '/access', '/setup', '/change-password'].includes(pathname);
 
   useEffect(() => {
     if (!user || isAuthPage) return;
@@ -62,7 +62,7 @@ export default function Navbar() {
               </button>
             </>
           )}
-          {!user && !isAuthPage && <Link href="/login" className="rounded-xl bg-teal-300 px-4 py-2.5 text-xs font-bold text-[#061012] shadow-sm transition hover:bg-teal-200">Sign in</Link>}
+          {!user && !isAuthPage && <Link href="/access" className="rounded-xl bg-teal-300 px-4 py-2.5 text-xs font-bold text-[#061012] shadow-sm transition hover:bg-teal-200">Sign in</Link>}
         </div>
       </div>
       {menuOpen && user && (
