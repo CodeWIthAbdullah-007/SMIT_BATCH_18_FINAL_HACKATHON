@@ -11,12 +11,23 @@ const mongoose = require('mongoose');
 const { logAudit } = require('../utils/audit');
 
 function getClient() {
-  if (!process.env.AI_API_KEY) return null;
+  const apiKey = process.env.AI_API_KEY || process.env.OPENAI_API_KEY;
+  if (!apiKey) return null;
   return new OpenAI({
-    apiKey: process.env.AI_API_KEY,
+    apiKey,
     ...(process.env.AI_BASE_URL ? { baseURL: process.env.AI_BASE_URL } : {}),
-    timeout: 15000,
-    maxRetries: 0
+    timeout: 45000,
+    maxRetries: 1
+  });
+}
+
+function logAIError(label, err) {
+  console.error(label, {
+    message: err?.message,
+    status: err?.status,
+    code: err?.code,
+    type: err?.type,
+    requestId: err?.requestID
   });
 }
 
@@ -123,7 +134,7 @@ exports.chat = async (req, res) => {
     .validate(req.body, { abortEarly: false, stripUnknown: true });
   if (error) return res.status(400).json({ error: 'Enter a message of at most 2000 characters.' });
   const client = getClient();
-  if (!client) return res.status(503).json({ error: 'AI is not configured. Add AI_API_KEY to the backend environment to enable the assistant.' });
+  if (!client) return res.status(503).json({ error: 'AI is not configured. Add AI_API_KEY (or OPENAI_API_KEY) to the backend environment to enable the assistant.' });
 
   try {
     const messages = [
@@ -132,7 +143,7 @@ exports.chat = async (req, res) => {
     ];
     let toolInvoked = [];
     let response = await client.chat.completions.create({
-      model: process.env.AI_MODEL || 'gpt-4o-mini',
+      model: (process.env.AI_MODEL || 'gpt-4o').trim(),
       messages,
       tools,
       tool_choice: 'auto'
@@ -152,7 +163,7 @@ exports.chat = async (req, res) => {
         messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(result) });
       }
       response = await client.chat.completions.create({
-        model: process.env.AI_MODEL || 'gpt-4o-mini',
+        model: (process.env.AI_MODEL || 'gpt-4o').trim(),
         messages,
         tools,
         tool_choice: 'auto'
@@ -169,14 +180,14 @@ exports.chat = async (req, res) => {
     });
     return res.json({ reply, isAIGenerated: true });
   } catch (err) {
-    console.error('AI assistant request failed:', err.message);
+    logAIError('AI assistant request failed:', err);
     return res.status(503).json({ error: 'The AI assistant is temporarily unavailable. Please try again shortly.' });
   }
 };
 
 exports.dashboardSummary = async (req, res) => {
   const client = getClient();
-  if (!client) return res.status(503).json({ error: 'AI is not configured. Add AI_API_KEY to the backend environment to enable summaries.' });
+  if (!client) return res.status(503).json({ error: 'AI is not configured. Add AI_API_KEY (or OPENAI_API_KEY) to the backend environment to enable summaries.' });
   const dashboard = require('./dashboardController');
   let metrics;
   const captured = {
@@ -198,7 +209,7 @@ exports.dashboardSummary = async (req, res) => {
   };
   try {
     const result = await client.chat.completions.create({
-      model: process.env.AI_MODEL || 'gpt-4o-mini',
+      model: (process.env.AI_MODEL || 'gpt-4o').trim(),
       messages: [
         { role: 'system', content: 'Summarize these real HCM dashboard figures in 3 to 5 concise, useful bullet points. Do not invent numbers, infer unavailable data, or reveal unnecessary personal information.' },
         { role: 'user', content: JSON.stringify(summaryData) }
@@ -209,7 +220,7 @@ exports.dashboardSummary = async (req, res) => {
     await AILog.create({ userEmail: req.user.email, role: req.user.role, prompt: '[Dashboard summary]', toolInvoked: null, response: summary });
     return res.json({ summary, data: summaryData, isAIGenerated: true });
   } catch (err) {
-    console.error('AI dashboard summary failed:', err.message);
+    logAIError('AI dashboard summary failed:', err);
     return res.status(503).json({ error: 'The AI assistant is temporarily unavailable. Please try again shortly.' });
   }
 };
@@ -223,7 +234,7 @@ exports.smartLeaveExtract = async (req, res) => {
 
   try {
     const completion = await client.chat.completions.create({
-      model: process.env.AI_MODEL || 'gpt-4o-mini',
+      model: (process.env.AI_MODEL || 'gpt-4o').trim(),
       response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: `Extract the employee's leave request as JSON only. Use keys leaveType (annual, sick, casual, unpaid), startDate and endDate (YYYY-MM-DD), and reason. Today is ${new Date().toISOString().slice(0, 10)}. Resolve relative dates from this day. If the type is not explicit, use casual. Never submit or approve the request; the user will review and confirm it.` },
@@ -243,7 +254,7 @@ exports.smartLeaveExtract = async (req, res) => {
     await AILog.create({ userEmail: req.user.email, role: req.user.role, prompt: value.sentence, toolInvoked: 'smart_leave_extract', response: JSON.stringify(validated.value) });
     return res.json(validated.value);
   } catch (err) {
-    console.error('Smart leave extraction failed:', err.message);
+    logAIError('Smart leave extraction failed:', err);
     return res.status(503).json({ error: 'Smart leave is temporarily unavailable. Please try the regular leave form.' });
   }
 };

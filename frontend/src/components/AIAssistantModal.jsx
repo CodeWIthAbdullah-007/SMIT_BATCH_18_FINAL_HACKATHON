@@ -17,7 +17,7 @@ export default function AIAssistantModal() {
     setLoading(true);
 
     try {
-      const res = await API.post('/ai/chat', { message: query });
+      const res = await API.post('/ai/chat', { message: query }, { timeout: 60000 });
       setMessages(prev => [...prev, { role: 'ai', text: res.data.reply, generated: res.data.isAIGenerated }]);
     } catch (err) {
       setMessages(prev => [...prev, { role: 'error', text: err.response?.data?.error || 'Unable to reach the assistant. Please try again.' }]);
