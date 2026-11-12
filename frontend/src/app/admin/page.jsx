@@ -5,7 +5,6 @@ import { BarChart3, Building2, Check, Clock3, Download, Megaphone, RefreshCw, Sh
 import API from '../../lib/api';
 import { useAuth } from '../../context/AuthContext';
 import AuthGate from '../../components/AuthGate';
-import AIAssistantModal from '../../components/AIAssistantModal';
 import { AnnouncementForm, WorkspaceLayout } from '../../components/WorkspaceLayout';
 
 const tabs = [
@@ -235,7 +234,6 @@ function AdminDashboard() {
 
         {activeTab === 'audit' && <section className={`${cardClass} !p-0`}><div className="border-b border-slate-100 px-5 py-4 sm:px-6"><h2 className="font-semibold text-slate-950">Recent company activity</h2><p className="mt-1 text-xs text-slate-500">Protected, read-only audit history.</p></div><div className="overflow-x-auto"><table className="w-full min-w-[650px] text-left text-sm"><thead className="bg-slate-50 text-[11px] uppercase tracking-wide text-slate-500"><tr><th className="px-5 py-3">Time</th><th className="px-5 py-3">Who</th><th className="px-5 py-3">Action</th><th className="px-5 py-3">Record</th></tr></thead><tbody className="divide-y divide-slate-100">{(dashboard?.audit || []).map((log) => <tr key={log._id}><td className="whitespace-nowrap px-5 py-3.5 text-xs text-slate-500">{new Date(log.createdAt).toLocaleString()}</td><td className="px-5 py-3.5 text-xs font-medium text-slate-800">{log.actor}</td><td className="px-5 py-3.5"><span className="rounded-lg bg-indigo-50 px-2 py-1 text-[11px] font-semibold text-indigo-700">{log.action}</span></td><td className="px-5 py-3.5 text-xs text-slate-600">{log.entity}</td></tr>)}{!dashboard?.audit?.length && <tr><td colSpan={4} className="px-5 py-10 text-center text-sm text-slate-500">No activity recorded yet.</td></tr>}</tbody></table></div></section>}
       </WorkspaceLayout>
-      <AIAssistantModal />
     </AuthGate>
   );
 }

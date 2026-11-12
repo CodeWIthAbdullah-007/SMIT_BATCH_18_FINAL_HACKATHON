@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { CalendarDays, Check, Clock3, Download, FileText, LayoutDashboard, UserRound, Wallet } from 'lucide-react';
 import API from '../../lib/api';
 import AuthGate from '../../components/AuthGate';
-import AIAssistantModal from '../../components/AIAssistantModal';
 import SmartLeaveInput from '../../components/SmartLeaveInput';
 import { WorkspaceLayout } from '../../components/WorkspaceLayout';
 import { useAuth } from '../../context/AuthContext';
@@ -198,7 +197,6 @@ function EmployeeDashboard() {
 
         {activeTab === 'profile' && dashboard?.employee && <div className="grid gap-5 lg:grid-cols-[.8fr_1.2fr]"><section className={cardClass}><div className="flex items-center gap-4"><span className="grid h-14 w-14 place-items-center rounded-2xl bg-indigo-50 text-indigo-600"><UserRound size={23} /></span><div><h2 className="font-semibold text-slate-950">{dashboard.employee.firstName} {dashboard.employee.lastName}</h2><p className="mt-1 text-xs text-slate-500">{dashboard.employee.designation} · {dashboard.employee.department}</p></div></div><dl className="mt-5 space-y-3 border-t border-slate-100 pt-4 text-xs"><div className="flex justify-between gap-3"><dt className="text-slate-500">Employee ID</dt><dd className="font-medium text-slate-800">{dashboard.employee.employeeCode}</dd></div><div className="flex justify-between gap-3"><dt className="text-slate-500">Work email</dt><dd className="break-all font-medium text-slate-800">{dashboard.employee.email}</dd></div><div className="flex justify-between gap-3"><dt className="text-slate-500">Joined</dt><dd className="font-medium text-slate-800">{new Date(dashboard.employee.joiningDate).toLocaleDateString()}</dd></div><div className="flex justify-between gap-3"><dt className="text-slate-500">Status</dt><dd className="font-medium capitalize text-slate-800">{dashboard.employee.status}</dd></div></dl></section><form onSubmit={saveProfile} className={`${cardClass} space-y-4`}><div><h2 className="font-semibold text-slate-950">Your contact details</h2><p className="mt-1 text-xs text-slate-500">You can update your phone number and home address. Contact HR to change work details.</p></div><label className="block text-xs font-semibold text-slate-700">Phone number<input maxLength={40} value={profile.phone} onChange={(event) => setProfile({ ...profile, phone: event.target.value })} className={inputClass} /></label><label className="block text-xs font-semibold text-slate-700">Address<textarea rows={3} maxLength={300} value={profile.address} onChange={(event) => setProfile({ ...profile, address: event.target.value })} className={inputClass} /></label><button disabled={saving} className="rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-indigo-700 disabled:opacity-50">{saving ? 'Saving…' : 'Save contact details'}</button></form></div>}
       </WorkspaceLayout>
-      <AIAssistantModal />
     </AuthGate>
   );
 }

@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { CalendarClock, Check, ClipboardList, Download, FileUp, LayoutDashboard, Megaphone, RefreshCw, UserRoundPlus, Users, Wallet, X } from 'lucide-react';
 import API from '../../lib/api';
 import AuthGate from '../../components/AuthGate';
-import AIAssistantModal from '../../components/AIAssistantModal';
 import { AnnouncementForm, WorkspaceLayout } from '../../components/WorkspaceLayout';
 
 const tabs = [
@@ -299,7 +298,6 @@ function HRDashboard() {
 
         {activeTab === 'announcements' && <AnnouncementForm onPosted={loadCore} />}
       </WorkspaceLayout>
-      <AIAssistantModal />
     </AuthGate>
   );
 }
