@@ -1,6 +1,8 @@
+
 import './globals.css';
 import { AuthProvider } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
+import BotpressChat from '../components/BotpressChat';
 
 export const metadata = {
   title: 'HCM Lite - AI Assisted HR System',
@@ -15,6 +17,8 @@ export default function RootLayout({ children }) {
           <Navbar />
           {children}
         </AuthProvider>
+
+        <BotpressChat />
       </body>
     </html>
   );
